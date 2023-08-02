@@ -1,6 +1,7 @@
 version: '3.9'
 
-simulator:
+services:
+  simulator:
     build:
       context: .
       dockerfile: Dockerfile
