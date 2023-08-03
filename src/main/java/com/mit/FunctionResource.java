@@ -18,6 +18,7 @@ import jakarta.ws.rs.core.Response;
 @Produces(MediaType.APPLICATION_JSON)
 public class FunctionResource {
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getMethod(@PathParam("route") String route, @Context ContainerRequestContext crc) {
         return ResponseMapper.map(echo(RequestMapper.map(crc, Void.class)));
     }
