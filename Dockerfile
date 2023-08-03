@@ -7,7 +7,7 @@ RUN mvn -B dependency:go-offline
 
 # Copy the source code into the Docker image and build the project
 COPY src/ ./src/
-RUN mvn -B clean package
+RUN git clone https://github.com/HtetLinMaung/httptrigger.git && cd httptrigger && mvn clean package && mvn install && cd .. && rm -rf httptrigger && mvn -B clean package
 
 # Second stage: run the WAR file using Tomcat
 FROM tomcat:jdk11
