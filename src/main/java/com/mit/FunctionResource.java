@@ -25,7 +25,7 @@ public class FunctionResource {
 
     public HttpResponse<?> echo(HttpRequest<Void> request) {
         Map<String, String> headers = HttpUtils.getCORSHeaders();
-        // headers.put("Content-Type", "text/plain");
+        headers.put("Content-Type", "application/json");
 
         Map<String, Object> body = new HashMap<String, Object>() {
             {
