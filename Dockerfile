@@ -3,11 +3,14 @@ FROM maven:3-eclipse-temurin-11 as builder
 
 # Copy the pom.xml file into the Docker image and download dependencies
 COPY pom.xml .
+
+RUN git clone https://github.com/HtetLinMaung/httptrigger.git && cd httptrigger && mvn clean package && mvn install && cd .. && rm -rf httptrigger
+
 RUN mvn -B dependency:go-offline
 
 # Copy the source code into the Docker image and build the project
 COPY src/ ./src/
-RUN git clone https://github.com/HtetLinMaung/httptrigger.git && cd httptrigger && mvn clean package && mvn install && cd .. && rm -rf httptrigger && mvn -B clean package
+RUN mvn -B clean package
 
 # Second stage: run the WAR file using Tomcat
 FROM tomcat:jdk11
