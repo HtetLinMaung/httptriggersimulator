@@ -19,10 +19,10 @@ import jakarta.ws.rs.core.Response;
 public class FunctionResource {
     @GET
     public Response getMethod(@PathParam("route") String route, @Context ContainerRequestContext crc) {
-        return ResponseMapper.map(echo(RequestMapper.map(crc, String.class)));
+        return ResponseMapper.map(echo(RequestMapper.map(crc, Void.class)));
     }
 
-    public HttpResponse<?> echo(HttpRequest<String> request) {
+    public HttpResponse<?> echo(HttpRequest<Void> request) {
         Map<String, String> headers = HttpUtils.getCORSHeaders();
         headers.put("Content-Type", "text/plain");
 
