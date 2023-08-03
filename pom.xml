@@ -26,6 +26,12 @@
       <artifactId>jersey-container-servlet</artifactId>
       <version>3.1.3</version>
     </dependency>
+
+    <dependency>
+      <groupId>com.starless.http</groupId>
+      <artifactId>httputils</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
   </dependencies>
   <build>
     <finalName>simulator</finalName>

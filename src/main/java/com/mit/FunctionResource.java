@@ -1,6 +1,16 @@
 package com.mit;
 
+import java.util.HashMap;
+import java.util.Map;
+import com.starless.http.HttpRequest;
+import com.starless.http.HttpResponse;
+import com.starless.http.HttpUtils;
+import com.starless.http.RequestMapper;
+import com.starless.http.ResponseMapper;
+
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.container.ContainerRequestContext;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -8,16 +18,20 @@ import jakarta.ws.rs.core.Response;
 @Produces(MediaType.APPLICATION_JSON)
 public class FunctionResource {
     @GET
-    public Response getMethod(@PathParam("route") String route) {
-        // Here, you can decide which method to call based on the "route"
-        // For example:
-        // if ("method1".equals(route)) {
-        // return Response.ok(MyClass.method1()).build();
-        // } else if ("method2".equals(route)) {
-        // return Response.ok(MyClass.method2()).build();
-        // } else {
-        // return Response.status(Response.Status.NOT_FOUND).build();
-        // }
-        return Response.ok(route).build();
+    public Response getMethod(@PathParam("route") String route, @Context ContainerRequestContext crc) {
+        return ResponseMapper.map(echo(RequestMapper.map(crc, String.class)));
+    }
+
+    public HttpResponse<?> echo(HttpRequest<String> request) {
+        Map<String, String> headers = HttpUtils.getCORSHeaders();
+        headers.put("Content-Type", "text/plain");
+
+        String body = "You made a " + request.getMethod() + " request to " + request.getPath();
+
+        return HttpResponse.builder()
+                .status(200)
+                .headers(headers)
+                .body(body)
+                .build();
     }
 }
