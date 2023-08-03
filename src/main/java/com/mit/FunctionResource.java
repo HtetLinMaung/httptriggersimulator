@@ -26,7 +26,12 @@ public class FunctionResource {
         Map<String, String> headers = HttpUtils.getCORSHeaders();
         headers.put("Content-Type", "text/plain");
 
-        String body = "You made a " + request.getMethod() + " request to " + request.getPath();
+        Map<String, Object> body = new HashMap<String, Object>() {
+            {
+                put("code", 200);
+                put("message", "Successfully executed");
+            }
+        };
 
         return HttpResponse.builder()
                 .status(200)
