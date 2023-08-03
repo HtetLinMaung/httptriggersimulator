@@ -18,14 +18,14 @@ import jakarta.ws.rs.core.Response;
 @Produces(MediaType.APPLICATION_JSON)
 public class FunctionResource {
     @GET
-    // @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getMethod(@PathParam("route") String route, @Context ContainerRequestContext crc) {
         return ResponseMapper.map(echo(RequestMapper.map(crc, Void.class)));
     }
 
     public HttpResponse<?> echo(HttpRequest<Void> request) {
         Map<String, String> headers = HttpUtils.getCORSHeaders();
-        headers.put("Content-Type", "application/json");
+        // headers.put("Content-Type", "application/json");
 
         Map<String, Object> body = new HashMap<String, Object>() {
             {
